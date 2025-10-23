@@ -12,10 +12,6 @@ final class AppDependencies {
     static func configure() -> DIContainer {
         let container = DIContainer()
         
-        container.register(AppCoordinator.self, scope: .singleton) { _ in
-            AppCoordinator()
-        }
-        
         container.register(CameraService.self, scope: .singleton) { _ in
             CameraService()
         }

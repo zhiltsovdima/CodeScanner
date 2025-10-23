@@ -12,17 +12,12 @@ struct CodeScannerApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self)
     var appDelegate
     
-    let container: DIContainer
-    let coordinator: AppCoordinator
-    
-    init() {
-        self.container = AppDependencies.configure()
-        self.coordinator = container.resolve(AppCoordinator.self)
-    }
+    let container: DIContainer = AppDependencies.configure()
+    let coordinator = AppCoordinator()
     
     var body: some Scene {
         WindowGroup {
-            RootView()
+            RootView(coordinator: coordinator)
                 .environment(\.diContainer, container)
                 .task {
                     await coordinator.start()
