@@ -111,11 +111,25 @@ final class CameraService: ObservableObject, CameraServiceProtocol {
         guard session.canAddOutput(metaDataOutput) else {
             throw CameraError.cannotAddOutput
         }
-        
-        session.addOutput(metaDataOutput)
-        metaDataOutput.metadataObjectTypes = [.qr]
-    }
 
+        session.addOutput(metaDataOutput)
+        
+        let supportedTypes: [AVMetadataObject.ObjectType] = [
+            .qr,
+            .ean8,
+            .ean13,
+            .code128,
+            .code39,
+            .code93,
+            .pdf417,
+            .aztec,
+            .dataMatrix,
+            .itf14,
+            .upce
+        ].filter { metaDataOutput.availableMetadataObjectTypes.contains($0) }
+
+        metaDataOutput.metadataObjectTypes = supportedTypes
+    }
     
     // MARK: - Error handling
     private func setError(_ error: CameraError) {
