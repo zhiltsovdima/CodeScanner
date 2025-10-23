@@ -8,14 +8,13 @@
 import SwiftUI
 
 struct RootView: View {
-    @Environment(\.diContainer) private var container
+    @StateObject var coordinator: AppCoordinator
     
     var body: some View {
-        let coordinator = container.resolve(AppCoordinator.self)
         Group {
             switch coordinator.currentFlow {
             case .main:
-                ScannerView(viewModel: container.resolve(ScannerViewModel.self))
+                MainView()
             }
         }
         .animation(.default, value: coordinator.currentFlow)
@@ -24,6 +23,6 @@ struct RootView: View {
 
 #Preview {
     let container = AppDependencies.configure()
-    RootView()
+    RootView(coordinator: AppCoordinator())
         .environment(\.diContainer, container)
 }
