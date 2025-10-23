@@ -15,7 +15,7 @@ struct RootView: View {
         Group {
             switch coordinator.currentFlow {
             case .main:
-                Color.blue
+                ScannerView(viewModel: container.resolve(ScannerViewModel.self))
             }
         }
         .animation(.default, value: coordinator.currentFlow)

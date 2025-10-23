@@ -16,6 +16,21 @@ final class AppDependencies {
             AppCoordinator()
         }
         
+        container.register(CameraService.self, scope: .singleton) { _ in
+            CameraService()
+        }
+        
+        container.register(FrameService.self, scope: .singleton) { container in
+            FrameService(cameraService: container.resolve(CameraService.self))
+        }
+        
+        container.register(ScannerViewModel.self) { container in
+            ScannerViewModel(
+                cameraService: container.resolve(CameraService.self),
+                frameService: container.resolve(FrameService.self)
+            )
+        }
+        
         return container
     }
 }
