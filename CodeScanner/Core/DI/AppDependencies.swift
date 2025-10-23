@@ -24,10 +24,23 @@ final class AppDependencies {
             FrameService(cameraService: container.resolve(CameraService.self))
         }
         
+        container.register(NetworkProvider.self, scope: .singleton) { _ in
+            URLSessionProvider()
+        }
+        
+        container.register(NetworkClient.self, scope: .singleton) { container in
+            DefaultNetworkClient(provider: container.resolve(NetworkProvider.self))
+        }
+        
+        container.register(ProductServiceProtocol.self, scope: .singleton) { container in
+            ProductsService(networkClient: container.resolve(NetworkClient.self))
+        }
+        
         container.register(ScannerViewModel.self) { container in
             ScannerViewModel(
                 cameraService: container.resolve(CameraService.self),
-                frameService: container.resolve(FrameService.self)
+                frameService: container.resolve(FrameService.self),
+                productsService: container.resolve(ProductServiceProtocol.self)
             )
         }
         
