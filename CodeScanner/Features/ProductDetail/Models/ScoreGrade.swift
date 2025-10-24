@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-enum ScoreGrade: String, CaseIterable {
+enum ScoreGrade: String, CaseIterable, Codable {
     case a, b, c, d, e
     case unknown
     

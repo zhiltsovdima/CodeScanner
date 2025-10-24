@@ -9,14 +9,17 @@ import AVFoundation
 import Combine
 import Foundation
 
+enum ScannedCodeType {
+    case qr, barcode
+}
+
 protocol FrameServiceProtocol {
     
 }
 
 final class FrameService: NSObject, ObservableObject, FrameServiceProtocol {
     
-    @Published var qrCode: String?
-    @Published var barcode: String?
+    @Published var code: (String, ScannedCodeType)?
 
     var shouldCaptureCode = true
     private let qrCodeQueue = DispatchQueue(label: "qr.output.queue")
@@ -48,11 +51,11 @@ extension FrameService: AVCaptureMetadataOutputObjectsDelegate {
         DispatchQueue.main.async {
             switch metadataObject.type {
             case .qr:
-                print("QR code: \(stringValue)")
-                self.qrCode = stringValue
+//                print("QR code: \(stringValue)")
+                self.code = (stringValue, .qr)
             case .ean8, .ean13, .code128, .code39, .code93, .pdf417, .aztec, .dataMatrix, .itf14, .upce:
-                print("Barcode: \(metadataObject.type.rawValue) → \(stringValue)")
-                self.barcode = stringValue
+//                print("Barcode: \(metadataObject.type.rawValue) → \(stringValue)")
+                self.code = (stringValue, .barcode)
             default:
                 print("Other code: \(metadataObject.type.rawValue) → \(stringValue)")
             }

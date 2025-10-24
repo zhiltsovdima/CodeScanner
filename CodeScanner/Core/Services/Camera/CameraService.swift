@@ -25,6 +25,7 @@ final class CameraService: ObservableObject, CameraServiceProtocol {
     
     @Published private(set) var error: CameraError?
     @Published private(set) var status: Status = .unconfigured
+    @Published var showingSettingsAlert: Bool = false
 
     private let sessionQueue = DispatchQueue(label: "camera.session.queue")
     private(set) var session = AVCaptureSession()
@@ -51,6 +52,9 @@ final class CameraService: ObservableObject, CameraServiceProtocol {
             completion(false)
         case .denied:
             setError(.deniedAuthorization)
+            DispatchQueue.main.async { [weak self] in
+                self?.showingSettingsAlert = true
+            }
             completion(false)
         @unknown default:
             setError(.unknownAuthorization)
@@ -130,6 +134,14 @@ final class CameraService: ObservableObject, CameraServiceProtocol {
 
         metaDataOutput.metadataObjectTypes = supportedTypes
     }
+    
+    func stopSession() {
+        sessionQueue.async {
+            self.session.stopRunning()
+            self.status = .unconfigured
+        }
+    }
+
     
     // MARK: - Error handling
     private func setError(_ error: CameraError) {

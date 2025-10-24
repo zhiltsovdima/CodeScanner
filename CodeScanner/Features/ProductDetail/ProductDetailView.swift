@@ -61,6 +61,12 @@ private extension ProductDetailView {
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .shadow(radius: 4)
             
+            if let displayName = viewModel.displayName {
+                Text(displayName)
+                    .font(.system(size: 26, weight: .bold))
+                    .multilineTextAlignment(.center)
+            }
+            
             Text(viewModel.productName)
                 .font(.system(size: 26, weight: .bold))
                 .multilineTextAlignment(.center)

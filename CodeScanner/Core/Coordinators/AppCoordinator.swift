@@ -8,26 +8,29 @@
 import Combine
 import Foundation
 
-enum AppFlow: Equatable {
-    case main
-}
-
 protocol Coordinator: ObservableObject {
     associatedtype Route
-    func start()
-    func navigate(to route: Route)
+    var currentFlow: Route { get set }
+    func start() async
+    func navigate(to route: Route) async
+}
+
+extension Coordinator {
+    @MainActor
+    func navigate(to route: Route) async {
+        currentFlow = route
+    }
 }
 
 // MARK: - AppCoordinator
-class AppCoordinator: ObservableObject {
-    @Published var currentFlow: AppFlow = .main
+final class AppCoordinator: Coordinator {
     
-    func start() async {
+    enum Flow: Equatable {
+        case main
+    }
+    
+    @Published var currentFlow: Flow = .main
+    
+    func start() async {}
 
-    }
-    
-    @MainActor
-    func showMainFlow() async {
-        currentFlow = .main
-    }
 }

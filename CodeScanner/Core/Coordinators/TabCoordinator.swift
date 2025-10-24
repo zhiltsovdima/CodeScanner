@@ -47,8 +47,16 @@ final class TabCoordinator: ObservableObject {
                 )
             )
         case .history:
+            let historyVM = container.resolve(ScannedHistoryViewModel.self)
             return AnyView(
-                Color.red
+                ScannedHistoryView(
+                    viewModel: historyVM
+                )
+                .task(id: selectedTab) {
+                    if self.selectedTab == .history {
+                        await historyVM.updateItems()
+                    }
+                }
             )
         }
     }

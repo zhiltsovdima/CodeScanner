@@ -8,21 +8,22 @@
 import Combine
 import SwiftUI
 
-final class ProductDetailViewModel: ObservableObject {
-    // MARK: – Основные данные
+final class ProductDetailViewModel: ObservableObject, Codable {
+    let id: String
+    let code: String
+    let scanDate: Date
+    var displayName: String?
+    
     let productName: String
     let brand: String
     let imageURL: URL?
     
-    // MARK: – Оценки
     let nutriscoreGrade: ScoreGrade
     let ecoscoreGrade: ScoreGrade
     
-    // MARK: – Ингредиенты и аллергены
     let ingredientsText: String
     let allergens: [String]
     
-    // MARK: – Питательная ценность (на 100 g)
     let energyKcal: String
     let fat: String
     let saturatedFat: String
@@ -31,8 +32,11 @@ final class ProductDetailViewModel: ObservableObject {
     let proteins: String
     let salt: String
     
-    // MARK: – Инициализатор из сетевой модели
     init(from response: ProductFactsResponse) {
+        self.id = UUID().uuidString
+        self.code = response.code
+        self.scanDate = Date()
+        
         let data = response.product ?? ProductData(
             productName: nil, brands: nil, imageFrontURL: nil,
             nutriscoreGrade: nil, ecoscoreGrade: nil,

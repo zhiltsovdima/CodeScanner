@@ -12,6 +12,14 @@ final class AppDependencies {
     static func configure() -> DIContainer {
         let container = DIContainer()
         
+        container.register(StorageStackInterface.self, scope: .singleton) { _ in
+            StorageStack(config: .testConfig)
+        }
+        
+        container.register(CodeRepository.self, scope: .singleton) { container in
+            CoreDataCodeRepository(storage: container.resolve(StorageStackInterface.self))
+        }
+        
         container.register(CameraService.self, scope: .singleton) { _ in
             CameraService()
         }
@@ -33,11 +41,11 @@ final class AppDependencies {
         }
         
         container.register(ScannerViewModel.self) { container in
-            ScannerViewModel(
-                cameraService: container.resolve(CameraService.self),
-                frameService: container.resolve(FrameService.self),
-                productsService: container.resolve(ProductServiceProtocol.self)
-            )
+            ScannerViewModel(container: container)
+        }
+        
+        container.register(ScannedHistoryViewModel.self) { container in
+            ScannedHistoryViewModel(codeRepo: container.resolve(CodeRepository.self))
         }
         
         return container
