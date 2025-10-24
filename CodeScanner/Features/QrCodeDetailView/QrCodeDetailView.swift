@@ -99,11 +99,3 @@ struct QrCodeDetailView: View {
         }
     }
 }
-//
-//#Preview("URL QR Code") {
-//    QrCodeDetailView(scannedString: "https://github.com")
-//}
-//
-//#Preview("Text QR Code") {
-//    QrCodeDetailView(scannedString: "Hellooooo")
-//}

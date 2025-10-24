@@ -19,8 +19,8 @@ struct QRCodeContent {
         case text
     }
     
-    init(rawValue: String, date: Date) {
-        self.id = UUID().uuidString
+    init(id: String, rawValue: String, date: Date) {
+        self.id = id
         self.rawValue = rawValue.trimmingCharacters(in: .whitespacesAndNewlines)
         
         if let url = URL(string: self.rawValue), url.scheme != nil {

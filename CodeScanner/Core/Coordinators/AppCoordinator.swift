@@ -8,22 +8,8 @@
 import Combine
 import Foundation
 
-protocol Coordinator: ObservableObject {
-    associatedtype Route
-    var currentFlow: Route { get set }
-    func start() async
-    func navigate(to route: Route) async
-}
-
-extension Coordinator {
-    @MainActor
-    func navigate(to route: Route) async {
-        currentFlow = route
-    }
-}
-
 // MARK: - AppCoordinator
-final class AppCoordinator: Coordinator {
+final class AppCoordinator: ObservableObject {
     
     enum Flow: Equatable {
         case main

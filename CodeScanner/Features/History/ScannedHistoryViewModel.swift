@@ -18,7 +18,6 @@ final class ScannedHistoryViewModel: ObservableObject {
     }
     
     func updateItems() async {
-        print("update")
         await fetchScannedItems()
     }
     
@@ -65,6 +64,5 @@ final class ScannedHistoryViewModel: ObservableObject {
             print("Failed to update display name: \(error)")
         }
     }
-
 }
 

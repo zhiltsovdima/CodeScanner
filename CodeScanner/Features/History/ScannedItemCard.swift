@@ -45,12 +45,6 @@ struct ScannedItemCard: View {
     }
 }
 
-#Preview("QR Code Card") {
-    ScannedItemCard(
-        item: .qr(QRCodeContent(rawValue: "https://github.com/apple/swift", date: Date())))
-        .padding()
-}
-
 #Preview("Product Card") {
     ScannedItemCard(item: .product(.mock))
         .padding()
