@@ -81,6 +81,7 @@ private extension CoreDataCodeRepository {
     }
 }
 
+// MARK: - CodeRepository
 extension CoreDataCodeRepository: CodeRepository {
     
     func save(_ item: ScannedItem) async throws {
@@ -89,6 +90,7 @@ extension CoreDataCodeRepository: CodeRepository {
             entity.id = item.id
             entity.scanDate = item.scanDate
             entity.rawCode = item.rawCode
+            entity.name = item.displayName
             
             switch item {
             case .qr:

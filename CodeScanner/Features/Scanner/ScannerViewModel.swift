@@ -77,7 +77,7 @@ final class ScannerViewModel: ObservableObject {
             let newItem: ScannedItem
             switch type {
             case .qr:
-                let qrContent = QRCodeContent(rawValue: code, date: Date())
+                let qrContent = QRCodeContent(id: UUID().uuidString, rawValue: code, date: Date())
                 newItem = .qr(qrContent)
                 
             case .barcode:

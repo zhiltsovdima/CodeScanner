@@ -70,7 +70,9 @@ private extension ProductDetailView {
             Text(viewModel.productName)
                 .font(.system(size: 26, weight: .bold))
                 .multilineTextAlignment(.center)
-            
+            Text(viewModel.code)
+                .font(.system(size: 16, weight: .regular))
+                .foregroundColor(.secondary)
             Text(viewModel.brand)
                 .font(.system(size: 16, weight: .regular))
                 .foregroundColor(.secondary)

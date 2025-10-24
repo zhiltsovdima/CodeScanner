@@ -66,7 +66,7 @@ struct ScannedHistoryView: View {
                     }
                     
                     Button {
-                        editedName = item.title
+                        editedName = item.displayName ?? item.rawCode
                         editingItem = item
                     } label: {
                         Label("Edit", systemImage: "pencil")
